@@ -4,6 +4,10 @@
 
 const path = require('path');
 const webpack = require('webpack');
+const fs = require('fs');
+
+const appDirectory = fs.realpathSync(process.cwd());
+const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 module.exports = options => ({
   mode: options.mode,
@@ -117,6 +121,11 @@ module.exports = options => ({
   ]),
   resolve: {
     modules: ['node_modules', 'app'],
+    alias: {
+      components: resolveApp('app/components'),
+      constants: resolveApp('app/constants'),
+      services: resolveApp('app/services'),
+    },
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],
   },
