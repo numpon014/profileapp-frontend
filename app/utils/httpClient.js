@@ -9,7 +9,7 @@ const errorCode = {
 export const httpRequest = {
   default: () =>
     axios.create({
-      baseURL: 'http://localhost:3000/api',
+      baseURL: isLocal() ? 'http://localhost:3000/api' : '/api',
       timeout: 30000,
     }),
 };
@@ -23,6 +23,13 @@ export const authHeader = () => {
   }
 
   return {};
+};
+
+export const isLocal = () => {
+  const isLocalhost = window.location.host.match(/localhost/g);
+  const isSelfIP = window.location.host.match(/127\.0\.0\.1/g);
+  const isLocalIP = window.location.host.match(/[0-9]{1,}(\.[0-9]{1,}){3,}/g);
+  return !!(isLocalhost || isSelfIP || isLocalIP);
 };
 
 export const simplifyError = error => {
