@@ -7,11 +7,6 @@ import Footer from 'components/Footer';
 const StyledWrap = styled.div`
    {
     margin: 0 auto;
-
-    footer {
-      padding: 40px 0 41px 0;
-      background-color: #4d0a50;
-    }
   }
 `;
 

@@ -123,6 +123,7 @@ module.exports = options => ({
     modules: ['node_modules', 'app'],
     alias: {
       components: resolveApp('app/components'),
+      containers: resolveApp('app/containers'),
       constants: resolveApp('app/constants'),
       services: resolveApp('app/services'),
     },
