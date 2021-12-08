@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { Button, Form } from 'react-bootstrap';
 import styled from 'styled-components';
+import { FormattedMessage, injectIntl } from 'react-intl';
+import appLogo from 'assets/images/tukubkao_logo.png';
 import { submitLoginForm } from './actions';
 
 const LoginPageWrapper = styled.div`
@@ -25,11 +27,11 @@ const LoginPageWrapper = styled.div`
   min-height: 100%;
   position: absolute;
 
-  h3 {
-    text-align: center;
-    margin: 0;
-    line-height: 1;
-    padding-bottom: 20px;
+  .logo {
+    width: 150px;
+    height: auto;
+    display: block;
+    margin: 0 auto 10px;
   }
 
   .auth-inner {
@@ -45,7 +47,7 @@ const LoginPageWrapper = styled.div`
   }
 `;
 
-export function LoginPage({ onSubmitForm }) {
+export function LoginPage({ onSubmitForm, intl }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -57,30 +59,42 @@ export function LoginPage({ onSubmitForm }) {
   return (
     <LoginPageWrapper>
       <Helmet>
-        <title>Login Page</title>
+        <title>{intl.formatMessage({ id: 'loginPage.page.title' })}</title>
         <meta
-          name="Profile App"
-          content="Register your profile to get free ads!"
+          name={intl.formatMessage({ id: 'app.name' })}
+          content={intl.formatMessage({ id: 'loginPage.page.content' })}
         />
       </Helmet>
       <div className="auth-inner">
+        <img
+          src={appLogo}
+          alt={intl.formatMessage({ id: 'app.name' })}
+          className="logo"
+        />
         <Form onSubmit={handleSubmit}>
-          <h3>Sign In</h3>
           <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Email address</Form.Label>
+            <Form.Label>
+              <FormattedMessage id="loginPage.form.field.email.label" />
+            </Form.Label>
             <Form.Control
               type="email"
-              placeholder="Enter email"
+              placeholder={intl.formatMessage({
+                id: 'loginPage.form.field.email.placeholder',
+              })}
               value={username}
               onChange={e => setUsername(e.target.value)}
             />
           </Form.Group>
 
           <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
+            <Form.Label>
+              <FormattedMessage id="loginPage.form.field.password.label" />
+            </Form.Label>
             <Form.Control
               type="password"
-              placeholder="Password"
+              placeholder={intl.formatMessage({
+                id: 'loginPage.form.field.password.placeholder',
+              })}
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
@@ -88,7 +102,7 @@ export function LoginPage({ onSubmitForm }) {
 
           <div className="d-grid gap-2">
             <Button variant="dark" type="submit" size="lg">
-              Submit
+              <FormattedMessage id="loginPage.form.button.signIn" />
             </Button>
           </div>
         </Form>
@@ -98,6 +112,7 @@ export function LoginPage({ onSubmitForm }) {
 }
 
 LoginPage.propTypes = {
+  intl: PropTypes.object,
   onSubmitForm: PropTypes.func,
 };
 
@@ -117,6 +132,7 @@ const withConnect = connect(
 );
 
 export default compose(
+  injectIntl,
   withConnect,
   memo,
 )(LoginPage);

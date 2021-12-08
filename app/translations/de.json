@@ -1,4 +1,13 @@
 {
+  "app.name": "Profile App by Tukubkao Farm",
+  "loginPage.page.title": "Login Page",
+  "loginPage.page.content": "Register your profile to get free ads!",
+  "loginPage.form.title": "Log In",
+  "loginPage.form.field.email.label": "Email address",
+  "loginPage.form.field.email.placeholder": "Enter Email",
+  "loginPage.form.field.password.label": "Password",
+  "loginPage.form.field.password.placeholder": "Password",
+  "loginPage.form.button.signIn": "Sign in",
   "boilerplate.components.Footer.author.message": "Mit Liebe gemacht von {author}.",
   "boilerplate.components.Footer.license.message": "Dieses Projekt wird unter der MIT-Lizenz veröffentlicht.",
   "boilerplate.components.Header.features": "",
