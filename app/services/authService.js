@@ -1,4 +1,4 @@
-import { httpClient } from '../utils/httpClient';
+import { httpRequest } from '../utils/httpClient';
 
 export const authService = {
   login,
@@ -9,12 +9,12 @@ function login(username, password) {
   const bodyFormData = new FormData();
   bodyFormData.set('username', username);
   bodyFormData.set('password', password);
-  return httpClient
+  return httpRequest
     .default()
     .post(serviceUri, bodyFormData, {
       method: 'POST',
       headers: { 'Content-Type': 'multipart/form-data' },
     })
-    .then(response => response)
+    .then(response => response.data)
     .catch(error => error);
 }

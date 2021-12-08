@@ -72,11 +72,11 @@ module.exports = {
       });
     }
 
-    // If the user wants Loadable.js to load the component asynchronously
+    // If the user wants loadable.js to load the component asynchronously
     if (data.wantLoadable) {
       actions.push({
         type: 'add',
-        path: '../../app/components/{{properCase name}}/Loadable.js',
+        path: '../../app/components/{{properCase name}}/loadable.js',
         templateFile: './component/loadable.js.hbs',
         abortOnFail: true,
       });

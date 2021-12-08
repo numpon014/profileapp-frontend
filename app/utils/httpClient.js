@@ -6,7 +6,7 @@ const errorCode = {
   // NOT_FOUND: 404,
 };
 
-export const httpClient = {
+export const httpRequest = {
   default: () =>
     axios.create({
       baseURL: 'http://localhost:3000/api',
