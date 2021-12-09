@@ -12,6 +12,29 @@ module.exports = function addProdMiddlewares(app, options) {
   app.use(compression());
   app.use(publicPath, express.static(outputPath));
 
+  /**
+   * Apply redirection filter to all requests
+   */
+  const versionFile = path.resolve(outputPath, 'version.json');
+  app.get(['/version'], (req, res) => {
+    res.set({
+      'Content-Type': 'application/json',
+    });
+    res.sendFile(versionFile);
+  });
+
+  /**
+   * AWS ELB pings this URL to make sure the instance is running
+   */
+  app.get(['/health'], (req, res) => {
+    res.set({
+      'Content-Type': 'text/plain',
+      'Content-Length': 2,
+    });
+    res.write('OK');
+    res.status(200).end();
+  });
+
   app.get('*', (req, res) =>
     res.sendFile(path.resolve(outputPath, 'index.html')),
   );
