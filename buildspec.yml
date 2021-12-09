@@ -28,7 +28,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      - cd shop-web && docker build --build-arg BUILD_NUMBER=${CODEBUILD_BUILD_ID} --build-arg REVISION=${CODEBUILD_SOURCE_VERSION} -t $REPOSITORY_URI:latest .
+      - docker build --build-arg BUILD_NUMBER=${CODEBUILD_BUILD_ID} --build-arg REVISION=${CODEBUILD_SOURCE_VERSION} -t $REPOSITORY_URI:latest .
       - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
   post_build:
     commands:
@@ -44,4 +44,4 @@ phases:
       - aws ecs update-service --cluster $CLUSTER --region $AWS_DEFAULT_REGION --service $SERVICE_NAME --task-definition $FAMILY:$REVISION --desired-count $DESIRED_COUNT --force-new-deployment
       - echo Deploy completed on `date`
 artifacts:
-  files: shop-web/$TASKDEF_FILE
+  files: $TASKDEF_FILE
