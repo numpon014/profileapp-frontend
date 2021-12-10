@@ -17,8 +17,8 @@ import LoginPage from 'containers/LoginPage/loadable';
 import Layout from 'containers/Layout/CommonLayout';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-
 import GlobalStyle from '../../global-styles';
+import PrivateRoute from './privateRoute';
 
 export default function App() {
   return (
@@ -28,12 +28,12 @@ export default function App() {
       </Helmet>
       <Switch>
         <Route path="/login" component={LoginPage} />
-        <Route exact path="/">
+        <PrivateRoute path="/" exact>
           <Layout component={HomePage} />
-        </Route>
-        <Route path="/features">
+        </PrivateRoute>
+        <PrivateRoute path="/features" exact>
           <Layout component={FeaturePage} />
-        </Route>
+        </PrivateRoute>
         <Route exact path="">
           <Layout component={NotFoundPage} />
         </Route>

@@ -14,6 +14,10 @@ export const httpRequest = {
     }),
 };
 
+export function isAuthenticated() {
+  return !!JSON.parse(localStorage.getItem('user'));
+}
+
 export const authHeader = () => {
   // return authorization header with jwt token
   const user = JSON.parse(localStorage.getItem('user'));
