@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -8,6 +8,8 @@ import styled from 'styled-components';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import appLogo from 'assets/images/tukubkao_logo.png';
 import Alert from 'containers/Alert';
+import history from 'utils/history';
+import { alertActions } from 'containers/Alert/action';
 import { submitLoginForm } from './actions';
 
 const LoginPageWrapper = styled.div`
@@ -48,21 +50,24 @@ const LoginPageWrapper = styled.div`
   }
 `;
 
-export function LoginPage({ onSubmitForm, intl }) {
+export function LoginPage({ onSubmitForm, clearAlert, intl }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
-    console.log(
-      intl.formatMessage({ id: 'loginPage.form.result.fail.message' }),
-    );
     onSubmitForm(
       username,
       password,
       intl.formatMessage({ id: 'loginPage.form.result.fail.message' }),
     );
   };
+
+  useEffect(() => {
+    history.listen(() => {
+      clearAlert();
+    });
+  }, []);
 
   return (
     <LoginPageWrapper>
@@ -123,11 +128,15 @@ export function LoginPage({ onSubmitForm, intl }) {
 LoginPage.propTypes = {
   intl: PropTypes.object,
   onSubmitForm: PropTypes.func,
+  clearAlert: PropTypes.func,
 };
 
 const mapDispatchToProps = dispatch => ({
   onSubmitForm(username, password, failMessage) {
     dispatch(submitLoginForm(username, password, failMessage));
+  },
+  clearAlert() {
+    dispatch(alertActions.clear());
   },
 });
 
