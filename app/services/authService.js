@@ -9,12 +9,19 @@ function login(username, password) {
   const bodyFormData = new FormData();
   bodyFormData.set('username', username);
   bodyFormData.set('password', password);
-  return httpRequest
-    .default()
-    .post(serviceUri, bodyFormData, {
-      method: 'POST',
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
-    .then(response => response.data)
-    .catch(error => error);
+
+  return new Promise((resolve, reject) =>
+    httpRequest
+      .default()
+      .post(serviceUri, bodyFormData, {
+        method: 'POST',
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      }),
+  );
 }

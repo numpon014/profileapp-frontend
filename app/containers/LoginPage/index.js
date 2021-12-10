@@ -7,6 +7,7 @@ import { Button, Form } from 'react-bootstrap';
 import styled from 'styled-components';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import appLogo from 'assets/images/tukubkao_logo.png';
+import Alert from 'containers/Alert';
 import { submitLoginForm } from './actions';
 
 const LoginPageWrapper = styled.div`
@@ -53,7 +54,14 @@ export function LoginPage({ onSubmitForm, intl }) {
 
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmitForm(username, password);
+    console.log(
+      intl.formatMessage({ id: 'loginPage.form.result.fail.message' }),
+    );
+    onSubmitForm(
+      username,
+      password,
+      intl.formatMessage({ id: 'loginPage.form.result.fail.message' }),
+    );
   };
 
   return (
@@ -72,6 +80,7 @@ export function LoginPage({ onSubmitForm, intl }) {
           className="logo"
         />
         <Form onSubmit={handleSubmit}>
+          <Alert />
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>
               <FormattedMessage id="loginPage.form.field.email.label" />
@@ -116,18 +125,14 @@ LoginPage.propTypes = {
   onSubmitForm: PropTypes.func,
 };
 
-const mapStateToProps = () => ({
-  // account: state.get('account'),
-});
-
 const mapDispatchToProps = dispatch => ({
-  onSubmitForm(username, password) {
-    dispatch(submitLoginForm(username, password));
+  onSubmitForm(username, password, failMessage) {
+    dispatch(submitLoginForm(username, password, failMessage));
   },
 });
 
 const withConnect = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps,
 );
 

@@ -1,9 +1,10 @@
 import { authService } from 'services';
 import { setItem as setStorageItem } from 'utils/localStorage';
 import history from 'utils/history';
+import { alertActions } from 'containers/Alert/action';
 import { userConstants } from './constants';
 
-export function submitLoginForm(username, password) {
+export function submitLoginForm(username, password, failMessage) {
   return dispatch => {
     dispatch(request({ username }));
 
@@ -15,6 +16,7 @@ export function submitLoginForm(username, password) {
         history.push('/');
       })
       .catch(err => {
+        dispatch(alertActions.error(failMessage));
         dispatch(failure(err.toString()));
       });
 
