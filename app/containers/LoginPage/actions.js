@@ -13,7 +13,7 @@ export function submitLoginForm(username, password, failMessage) {
       .then(user => {
         setStorageItem('user', JSON.stringify(user));
         dispatch(success(user));
-        history.push('/');
+        history.push('/profile');
       })
       .catch(err => {
         dispatch(alertActions.error(failMessage));

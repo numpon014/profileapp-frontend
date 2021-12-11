@@ -1,10 +1,10 @@
 {
-  "name": "react-boilerplate",
+  "name": "profile-app",
   "version": "4.0.0",
   "description": "A highly scalable, offline-first foundation with the best DX and a focus on performance and best practices",
   "repository": {
     "type": "git",
-    "url": "git://github.com/react-boilerplate/react-boilerplate.git"
+    "url": "https://github.com/numpon014/numpon-frontend-web-06Dec2021"
   },
   "engines": {
     "npm": ">=5",

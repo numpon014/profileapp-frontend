@@ -1,23 +1,19 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import A from './A';
-import Img from './Img';
+import PropTypes from 'prop-types';
 import NavBar from './NavBar';
 import HeaderLink from './HeaderLink';
-import Banner from './banner.jpg';
 import messages from './messages';
 
-function Header() {
+function Header({ className }) {
   return (
-    <div>
-      <A href="https://www.reactboilerplate.com/">
-        <Img src={Banner} alt="react-boilerplate - Logo" />
-      </A>
+    <div className={className}>
       <NavBar>
         <HeaderLink to="/">
           <FormattedMessage {...messages.home} />
         </HeaderLink>
+        <HeaderLink to="/profile">Profile</HeaderLink>
         <HeaderLink to="/features">
           <FormattedMessage {...messages.features} />
         </HeaderLink>
@@ -25,5 +21,9 @@ function Header() {
     </div>
   );
 }
+
+Header.propTypes = {
+  className: PropTypes.string,
+};
 
 export default Header;

@@ -5,21 +5,33 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 
 const StyledWrap = styled.div`
-  max-width: calc(768px + 16px * 2);
-  margin: 0 auto;
-  display: flex;
   min-height: 100%;
-  padding: 0 16px;
-  flex-direction: column;
+  width: 100%;
+
+  .main-body {
+    max-width: calc(1080px + 16px * 2);
+    margin: 0 auto;
+    display: flex;
+    min-height: 100%;
+    padding: 0 16px;
+    flex-direction: column;
+  }
+  .main-header {
+    margin-bottom: 20px;
+  }
+
+  .main-footer {
+    margin-top: 20px;
+  }
 `;
 
 const DefaultLayout = ({ component: Component, ...Props }) => (
   <StyledWrap className="main-wrapper">
-    <Header />
+    <Header className="main-header" />
     <div className="main-body">
       <Component {...Props} />
     </div>
-    <Footer />
+    <Footer className="main-footer" />
   </StyledWrap>
 );
 
