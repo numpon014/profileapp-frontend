@@ -7,6 +7,8 @@ import Footer from 'components/Footer';
 const StyledWrap = styled.div`
   min-height: 100%;
   width: 100%;
+  background: #f5f6fa;
+  position: absolute;
 
   .main-body {
     max-width: calc(1080px + 16px * 2);

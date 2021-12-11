@@ -17,6 +17,18 @@ export function userReducer(state = initialState, action) {
       return {
         error: action.error,
       };
+    case userConstants.UPDATE_USER_REQUEST:
+      return {
+        loading: true,
+      };
+    case userConstants.UPDATE_USER_SUCCESS:
+      return {
+        user: action.user,
+      };
+    case userConstants.UPDATE_USER_FAILURE:
+      return {
+        error: action.error,
+      };
     default:
       return state;
   }

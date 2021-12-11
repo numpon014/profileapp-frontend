@@ -9,6 +9,12 @@
   "loginPage.form.field.password.placeholder": "Password",
   "loginPage.form.result.fail.message": "Email or Password is incorrect!",
   "loginPage.form.button.signIn": "Sign in",
+  "profilePage.page.title": "Profile Page",
+  "profilePage.page.content": "Your profile to get free ads!",
+  "profilePage.form.title": "Profile",
+  "profilePage.form.field.name.label": "Name",
+  "profilePage.form.field.age.label": "Age",
+
   "boilerplate.components.Footer.author.message": "Made with love by {author}.",
   "boilerplate.components.Footer.license.message": "This project is licensed under the MIT license.",
   "boilerplate.components.Header.features": "Features",
