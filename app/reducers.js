@@ -10,6 +10,7 @@ import globalReducer from 'containers/App/reducer';
 import languageProviderReducer from 'containers/LanguageProvider/reducer';
 import { alertReducer } from 'containers/Alert/reducer';
 import { userReducer } from 'shares/reducers/users';
+import { experienceReducer } from 'shares/reducers/experiences';
 
 /**
  * Merges the main reducer with the router state and dynamically injected reducers
@@ -20,6 +21,7 @@ export default function createReducer(injectedReducers = {}) {
     language: languageProviderReducer,
     alert: alertReducer,
     user: userReducer,
+    experience: experienceReducer,
     router: connectRouter(history),
     ...injectedReducers,
   });

@@ -3,6 +3,7 @@ import { httpRequest } from '../../utils/httpClient';
 export const userService = {
   getCurrentUser,
   updateUser,
+  getUserExperience,
 };
 
 function getCurrentUser() {
@@ -27,6 +28,21 @@ function updateUser(id, params) {
     httpRequest
       .default()
       .patch(uri, params)
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      }),
+  );
+}
+
+function getUserExperience(id) {
+  const uri = `user/${id}/experiences`;
+  return new Promise((resolve, reject) =>
+    httpRequest
+      .default()
+      .get(uri)
       .then(response => {
         resolve(response.data);
       })

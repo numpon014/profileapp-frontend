@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Header from 'components/Header';
-import Footer from 'components/Footer';
 
 const StyledWrap = styled.div`
   min-height: 100%;
@@ -33,7 +32,6 @@ const DefaultLayout = ({ component: Component, ...Props }) => (
     <div className="main-body">
       <Component {...Props} />
     </div>
-    <Footer className="main-footer" />
   </StyledWrap>
 );
 
