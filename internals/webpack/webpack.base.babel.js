@@ -125,7 +125,7 @@ module.exports = options => ({
       components: resolveApp('app/components'),
       containers: resolveApp('app/containers'),
       constants: resolveApp('app/constants'),
-      services: resolveApp('app/services'),
+      shares: resolveApp('app/shares'),
     },
     extensions: ['.js', '.jsx', '.react.js'],
     mainFields: ['browser', 'jsnext:main', 'main'],

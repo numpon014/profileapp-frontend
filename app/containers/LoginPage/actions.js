@@ -1,8 +1,8 @@
-import { authService } from 'services';
+import { authService } from 'shares/services';
 import { setItem as setStorageItem } from 'utils/localStorage';
 import history from 'utils/history';
 import { alertActions } from 'containers/Alert/action';
-import { userConstants } from './constants';
+import { authConstants } from './constants';
 
 export function submitLoginForm(username, password, failMessage) {
   return dispatch => {
@@ -21,13 +21,13 @@ export function submitLoginForm(username, password, failMessage) {
       });
 
     function request(user) {
-      return { type: userConstants.LOGIN_REQUEST, user };
+      return { type: authConstants.LOGIN_REQUEST, user };
     }
     function success(user) {
-      return { type: userConstants.LOGIN_SUCCESS, user };
+      return { type: authConstants.LOGIN_SUCCESS, user };
     }
     function failure(error) {
-      return { type: userConstants.LOGIN_FAILURE, error };
+      return { type: authConstants.LOGIN_FAILURE, error };
     }
   };
 }

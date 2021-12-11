@@ -159,7 +159,7 @@ Imagine a navigation bar, this is what its folder might look like:
 NavBar          # Wrapping folder
 ├── index.js      # Actual component
 ├── actions.js    # Actions
-├── constants.js  # Constants
+├── users.js  # Constants
 ├── reducer.js    # Reducer
 └── test               # Folder of tests
     ├── actions.test.js  # Actions tests

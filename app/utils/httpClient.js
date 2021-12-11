@@ -10,12 +10,19 @@ export const httpRequest = {
   default: () =>
     axios.create({
       baseURL: isLocal() ? 'http://localhost:3000/api' : '/api',
+      headers: authHeader(),
       timeout: 30000,
     }),
 };
 
 export function isAuthenticated() {
   return !!JSON.parse(localStorage.getItem('user'));
+}
+
+export function getCurrentUserId() {
+  const user = JSON.parse(localStorage.getItem('user'));
+
+  return user && user.id ? user.id : null;
 }
 
 export const authHeader = () => {

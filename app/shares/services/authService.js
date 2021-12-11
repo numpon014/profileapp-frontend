@@ -1,4 +1,4 @@
-import { httpRequest } from '../utils/httpClient';
+import { httpRequest } from '../../utils/httpClient';
 
 export const authService = {
   login,

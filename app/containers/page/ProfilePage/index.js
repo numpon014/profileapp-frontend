@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -7,6 +7,7 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import styled from 'styled-components';
 import { injectIntl } from 'react-intl';
 import { alertActions } from 'containers/Alert/action';
+import { getCurrentUser } from 'shares/actions/users';
 
 const ProfilePageWrapper = styled.div`
   .account {
@@ -50,7 +51,13 @@ const ProfilePageWrapper = styled.div`
   }
 `;
 
-export function ProfilePage({ intl }) {
+export function ProfilePage({ user, getCurrentUserDetail, intl }) {
+  useEffect(() => {
+    getCurrentUserDetail(
+      intl.formatMessage({ id: 'loginPage.form.result.fail.message' }),
+    );
+  }, []);
+
   return (
     <ProfilePageWrapper>
       <Helmet>
@@ -65,26 +72,22 @@ export function ProfilePage({ intl }) {
           <Col xs={4}>
             <Card>
               <Card.Body>
-                <div className="account">
-                  <div className="profile">
-                    <div className="avatar">
-                      <img
-                        src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                        alt="Maxwell Admin"
-                      />
+                {user.user && (
+                  <div className="account">
+                    <div className="profile">
+                      <div className="avatar">
+                        {user.user.avatar && (
+                          <img
+                            src={user.user.avatar.url}
+                            alt={user.user.name}
+                          />
+                        )}
+                      </div>
+                      <h5 className="name">{user.user.name}</h5>
+                      <h6 className="email">{user.user.username}</h6>
                     </div>
-                    <h5 className="name">Yuki Hayashi</h5>
-                    <h6 className="email">yuki@Maxwell.com</h6>
                   </div>
-                  <div className="about">
-                    <h5>About</h5>
-                    <p>
-                      {/* eslint-disable-next-line react/no-unescaped-entities */}
-                      I'm Yuki. Full Stack Designer I enjoy creating
-                      user-centric, delightful and human experiences.
-                    </p>
-                  </div>
-                </div>
+                )}
               </Card.Body>
             </Card>
           </Col>
@@ -97,16 +100,25 @@ export function ProfilePage({ intl }) {
 
 ProfilePage.propTypes = {
   intl: PropTypes.object,
+  getCurrentUserDetail: PropTypes.func,
+  user: PropTypes.object,
 };
 
 const mapDispatchToProps = dispatch => ({
   clearAlert() {
     dispatch(alertActions.clear());
   },
+  getCurrentUserDetail() {
+    dispatch(getCurrentUser());
+  },
+});
+
+const mapStateToProps = state => ({
+  user: state.user,
 });
 
 const withConnect = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 );
 
