@@ -38,9 +38,9 @@ export function updateExperience(id, params, failMessage, callback) {
 
     return experienceService
       .updateExperience(id, params)
-      .then(user => {
-        dispatch(success(user));
-        if (typeof callback === 'function') callback(user);
+      .then(experience => {
+        dispatch(success(experience));
+        if (typeof callback === 'function') callback(experience);
       })
       .catch(err => {
         dispatch(alertActions.error(failMessage));
@@ -51,8 +51,40 @@ export function updateExperience(id, params, failMessage, callback) {
   function request() {
     return { type: experienceConstants.UPDATE_EXPERIENCE_REQUEST };
   }
-  function success(user) {
-    return { type: experienceConstants.UPDATE_EXPERIENCE_SUCCESS, user };
+  function success(experience) {
+    return { type: experienceConstants.UPDATE_EXPERIENCE_SUCCESS, experience };
+  }
+  function failure(error) {
+    return { type: experienceConstants.UPDATE_EXPERIENCE_FAILURE, error };
+  }
+}
+
+export function updateExperienceCompanyLogo(
+  id,
+  rawImage,
+  failMessage,
+  callback,
+) {
+  return dispatch => {
+    dispatch(request());
+
+    return experienceService
+      .updateExperienceCompanyLogo(id, rawImage)
+      .then(experience => {
+        dispatch(success(experience));
+        if (typeof callback === 'function') callback(experience);
+      })
+      .catch(err => {
+        dispatch(alertActions.error(failMessage));
+        dispatch(failure(err.toString()));
+      });
+  };
+
+  function request() {
+    return { type: experienceConstants.UPDATE_EXPERIENCE_REQUEST };
+  }
+  function success(experience) {
+    return { type: experienceConstants.UPDATE_EXPERIENCE_SUCCESS, experience };
   }
   function failure(error) {
     return { type: experienceConstants.UPDATE_EXPERIENCE_FAILURE, error };

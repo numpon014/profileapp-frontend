@@ -21,7 +21,7 @@ const StyledWrapper = styled.div`
 
   .easy-edit-inline-wrapper {
     .easy-edit-component-wrapper {
-      width: 92%;
+      width: 90%;
       input[type='text'] {
         min-height: calc(1.5em + 0.5rem + 2px);
         padding: 0.25rem 0.5rem;
@@ -47,6 +47,11 @@ const StyledWrapper = styled.div`
       background: none;
     }
   }
+
+  .text-muted {
+    font-size: 13px;
+  }
+
   .period {
     &:after {
       content: '';
@@ -74,8 +79,8 @@ function ExperienceForm({ className, experience, onSaveExperience, intl }) {
   };
 
   return (
-    <StyledWrapper className={`experience-item ${className}`}>
-      <p className="title">
+    <StyledWrapper className={`${className}`}>
+      <div className="title">
         <EasyEdit
           type={Types.TEXT}
           value={experience.title}
@@ -86,7 +91,7 @@ function ExperienceForm({ className, experience, onSaveExperience, intl }) {
           cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
           attributes={{ name: 'experience-title', id: 1 }}
         />
-      </p>
+      </div>
       <EasyEdit
         type={Types.TEXT}
         value={experience.company}
@@ -97,7 +102,7 @@ function ExperienceForm({ className, experience, onSaveExperience, intl }) {
         cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
         attributes={{ name: 'experience-company', id: 1 }}
       />
-      <p className="period">
+      <div className="period">
         <EasyEdit
           type={Types.DATE}
           value={experience.start_date}
@@ -119,8 +124,8 @@ function ExperienceForm({ className, experience, onSaveExperience, intl }) {
           cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
           attributes={{ name: 'experience-end-date', id: 1 }}
         />
-      </p>
-      <p className="text-muted">
+      </div>
+      <div className="text-muted">
         <EasyEdit
           type={Types.TEXTAREA}
           value={experience.description}
@@ -131,7 +136,7 @@ function ExperienceForm({ className, experience, onSaveExperience, intl }) {
           cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
           attributes={{ name: 'experience-description', id: 1 }}
         />
-      </p>
+      </div>
     </StyledWrapper>
   );
 }
