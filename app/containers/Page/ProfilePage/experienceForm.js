@@ -2,7 +2,7 @@ import React, { memo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Form } from 'react-bootstrap';
 import styled from 'styled-components';
-import { injectIntl } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import FileUpload from 'components/FileUpload';
@@ -71,9 +71,13 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
       </Button>
       {showExperienceForm && (
         <Form onSubmit={handleSubmit} className="experience-form">
-          <h5 className="mb-2 text-primary">Create Experience</h5>
+          <h5 className="mb-2 text-primary">
+            <FormattedMessage id="profilePage.form.experience.title" />
+          </h5>
           <Form.Group>
-            <Form.Label column="sm">Title</Form.Label>
+            <Form.Label column="sm">
+              <FormattedMessage id="profilePage.form.experience.field.title.label" />
+            </Form.Label>
             <Form.Control
               type="text"
               size="sm"
@@ -81,7 +85,9 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label column="sm">Company Name</Form.Label>
+            <Form.Label column="sm">
+              <FormattedMessage id="profilePage.form.experience.field.companyName.label" />
+            </Form.Label>
             <Form.Control
               type="text"
               size="sm"
@@ -89,14 +95,18 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label column="sm">Company Logo</Form.Label>
+            <Form.Label column="sm">
+              <FormattedMessage id="profilePage.form.experience.field.companyLogo.label" />
+            </Form.Label>
             <FileUpload
               onFileSelectSuccess={file => setSelectedFile(file)}
               onFileSelectError={({ error }) => showErrorAlert(error)}
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label column="sm">Start Date</Form.Label>
+            <Form.Label column="sm">
+              <FormattedMessage id="profilePage.form.experience.field.startDate.label" />
+            </Form.Label>
             <Form.Control
               type="date"
               size="sm"
@@ -104,7 +114,9 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label column="sm">End Date</Form.Label>
+            <Form.Label column="sm">
+              <FormattedMessage id="profilePage.form.experience.field.endDate.label" />
+            </Form.Label>
             <Form.Control
               type="date"
               size="sm"
@@ -112,7 +124,9 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
             />
           </Form.Group>
           <Form.Group>
-            <Form.Label column="sm">Description</Form.Label>
+            <Form.Label column="sm">
+              <FormattedMessage id="profilePage.form.experience.field.description.label" />
+            </Form.Label>
             <Form.Control
               type="text"
               size="sm"
@@ -121,7 +135,7 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
           </Form.Group>
           <div className="submit-wrapper">
             <Button variant="primary" type="submit" size="sm">
-              Submit
+              <FormattedMessage id="profilePage.form.experience.button.save" />
             </Button>
           </div>
         </Form>

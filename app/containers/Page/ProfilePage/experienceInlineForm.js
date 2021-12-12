@@ -105,7 +105,7 @@ function ExperienceInlineForm({
         }}
         saveButtonLabel={<FontAwesomeIcon icon={faCheck} />}
         cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
-        attributes={{ name: 'experience-company', id: 1 }}
+        attributes={{ name: 'experience-company', id: 2 }}
       />
       <div className="period">
         <EasyEdit
@@ -116,7 +116,7 @@ function ExperienceInlineForm({
           }}
           saveButtonLabel={<FontAwesomeIcon icon={faCheck} />}
           cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
-          attributes={{ name: 'experience-start-date', id: 1 }}
+          attributes={{ name: 'experience-start-date', id: 3 }}
         />
         <span className="date-to"> - </span>
         <EasyEdit
@@ -127,7 +127,7 @@ function ExperienceInlineForm({
           }}
           saveButtonLabel={<FontAwesomeIcon icon={faCheck} />}
           cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
-          attributes={{ name: 'experience-end-date', id: 1 }}
+          attributes={{ name: 'experience-end-date', id: 4 }}
         />
       </div>
       <div className="text-muted">
@@ -139,7 +139,7 @@ function ExperienceInlineForm({
           }}
           saveButtonLabel={<FontAwesomeIcon icon={faCheck} />}
           cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
-          attributes={{ name: 'experience-description', id: 1 }}
+          attributes={{ name: 'experience-description', id: 5 }}
         />
       </div>
     </StyledWrapper>
