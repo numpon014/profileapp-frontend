@@ -10,7 +10,7 @@ import appLogo from 'assets/images/tukubkao_logo.png';
 import Alert from 'containers/Alert';
 import history from 'utils/history';
 import { alertActions } from 'containers/Alert/action';
-import { submitLoginForm } from './actions';
+import { login } from 'shares/actions/auth';
 
 const LoginPageWrapper = styled.div`
   background: #12c2e9;
@@ -133,7 +133,7 @@ LoginPage.propTypes = {
 
 const mapDispatchToProps = dispatch => ({
   onSubmitForm(username, password, failMessage) {
-    dispatch(submitLoginForm(username, password, failMessage));
+    dispatch(login(username, password, failMessage));
   },
   clearAlert() {
     dispatch(alertActions.clear());

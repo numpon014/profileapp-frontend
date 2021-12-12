@@ -41,7 +41,7 @@ function Header({ className, intl, onLogout }) {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/">
-                <FormattedMessage id="app.navbar.home" />
+                <FormattedMessage id="app.navbar.profile" />
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>

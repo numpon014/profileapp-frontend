@@ -2,6 +2,7 @@
   "app.name": "Profile App",
   "app.navbar.logout": "Logout",
   "app.navbar.home": "Home",
+  "app.navbar.profile": "My Profile",
   "loginPage.page.title": "Login Page",
   "loginPage.page.content": "Register your profile to get free ads!",
   "loginPage.form.title": "Log In",
