@@ -2,10 +2,13 @@ import history from 'utils/history';
 import { authService } from 'shares/services';
 import { authConstants } from 'shares/constants/auth';
 import { alertActions } from 'containers/Alert/action';
-import { setItem as setStorageItem } from '../../utils/localStorage';
+import {
+  setItem as setStorageItem,
+  removeItem as removeStorageItem,
+} from '../../utils/localStorage';
 
 export function logout() {
-  authService.logout();
+  removeStorageItem('user');
   history.push('/login');
   return { type: authConstants.LOGOUT };
 }

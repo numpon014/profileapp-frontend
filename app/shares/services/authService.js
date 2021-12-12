@@ -2,7 +2,6 @@ import { httpRequest } from '../../utils/httpClient';
 
 export const authService = {
   login,
-  logout,
 };
 
 function login(username, password) {
@@ -25,8 +24,4 @@ function login(username, password) {
         reject(error);
       }),
   );
-}
-
-function logout() {
-  localStorage.removeItem('user');
 }
