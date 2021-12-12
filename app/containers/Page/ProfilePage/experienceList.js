@@ -58,7 +58,9 @@ function ExperienceList({ className, experiences, deleteUserExperience }) {
   };
 
   const onDeleteExperience = experienceId => {
-    deleteUserExperience(experienceId);
+    // eslint-disable-next-line no-unused-expressions
+    window.confirm('Are you sure you wish to delete this item?') &&
+      deleteUserExperience(experienceId);
   };
 
   return (
