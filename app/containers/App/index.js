@@ -11,8 +11,8 @@ import { Helmet } from 'react-helmet';
 import { Switch, Route } from 'react-router-dom';
 
 import ProfilePage from 'containers/Page/ProfilePage/loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import LoginPage from 'containers/LoginPage/loadable';
+import NotFoundPage from 'containers/Page/NotFoundPage/Loadable';
+import LoginPage from 'containers/Page/LoginPage/loadable';
 import Layout from 'containers/Layout/CommonLayout';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
