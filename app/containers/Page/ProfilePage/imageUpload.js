@@ -37,8 +37,12 @@ const StyledWrapper = styled.div`
     padding: 0;
   }
 
-  .fa-check {
+  .fa-check,
+  .fa-times {
     color: #000;
+  }
+  .action-buttons {
+    text-align: center;
   }
 `;
 
@@ -114,7 +118,7 @@ function ImageUpload({ experienceId, imageUrl, onSaveLogo, intl }) {
           onChange={handleChange}
         />
         {showUploadButton && (
-          <>
+          <div className="action-buttons">
             <Button
               variant="link"
               onClick={handleUpload}
@@ -129,7 +133,7 @@ function ImageUpload({ experienceId, imageUrl, onSaveLogo, intl }) {
             >
               <FontAwesomeIcon icon={faTimes} />
             </Button>
-          </>
+          </div>
         )}
       </form>
     </StyledWrapper>

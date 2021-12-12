@@ -3,6 +3,7 @@ import { httpRequest } from '../../utils/httpClient';
 export const experienceService = {
   createExperience,
   updateExperience,
+  deleteExperience,
   updateExperienceCompanyLogo,
 };
 
@@ -58,6 +59,22 @@ function createExperience(params) {
       .post(uri, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       })
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      }),
+  );
+}
+
+function deleteExperience(id) {
+  const uri = `experiences/${id}`;
+
+  return new Promise((resolve, reject) =>
+    httpRequest
+      .default()
+      .delete(uri)
       .then(response => {
         resolve(response.data);
       })

@@ -119,3 +119,30 @@ export function createCurrentUserExperience(params, failMessage, callback) {
     return { type: experienceConstants.CREATE_EXPERIENCE_FAILURE, error };
   }
 }
+
+export function deleteExperience(experienceId, callback) {
+  return dispatch => {
+    dispatch(request());
+
+    return experienceService
+      .deleteExperience(experienceId)
+      .then(experience => {
+        dispatch(success(experienceId));
+        if (typeof callback === 'function') callback(experience);
+      })
+      .catch(err => {
+        dispatch(alertActions.error(err.toString()));
+        dispatch(failure(err.toString()));
+      });
+  };
+
+  function request() {
+    return { type: experienceConstants.DELETE_EXPERIENCE_REQUEST };
+  }
+  function success(id) {
+    return { type: experienceConstants.DELETE_EXPERIENCE_SUCCESS, id };
+  }
+  function failure(error) {
+    return { type: experienceConstants.DELETE_EXPERIENCE_FAILURE, error };
+  }
+}

@@ -133,7 +133,7 @@ function ExperienceInlineForm({
       <div className="text-muted">
         <EasyEdit
           type={Types.TEXTAREA}
-          value={experience.description}
+          value={experience.description || null}
           onSave={value => {
             onSubmit('description', value);
           }}
