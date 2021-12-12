@@ -30,7 +30,7 @@ function Header({ className, intl, onLogout }) {
     <StyledWrap className={className}>
       <Navbar bg="light">
         <Container>
-          <Navbar.Brand as={Link} to="/profile">
+          <Navbar.Brand as={Link} to="/">
             <img
               src={appLogo}
               alt={intl.formatMessage({ id: 'app.name' })}
@@ -40,7 +40,7 @@ function Header({ className, intl, onLogout }) {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/">
+              <Nav.Link as={Link} to="/profile">
                 <FormattedMessage id="app.navbar.profile" />
               </Nav.Link>
             </Nav>
