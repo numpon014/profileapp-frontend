@@ -9,6 +9,7 @@ import { compose } from 'redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { logout } from 'shares/actions/auth';
 
 const StyledWrap = styled.div`
   .logo {
@@ -20,7 +21,11 @@ const StyledWrap = styled.div`
   }
 `;
 
-function Header({ className, intl }) {
+function Header({ className, intl, onLogout }) {
+  const handleLogout = () => {
+    onLogout();
+  };
+
   return (
     <StyledWrap className={className}>
       <Navbar bg="light">
@@ -35,13 +40,17 @@ function Header({ className, intl }) {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/profile">
+              <Nav.Link as={Link} to="/">
                 <FormattedMessage id="app.navbar.home" />
               </Nav.Link>
             </Nav>
           </Navbar.Collapse>
           <Nav>
-            <Button variant="link" className="logout-button">
+            <Button
+              variant="link"
+              className="logout-button"
+              onClick={handleLogout}
+            >
               <FontAwesomeIcon icon={faSignOutAlt} />{' '}
               <FormattedMessage id="app.navbar.logout" />
             </Button>
@@ -52,8 +61,15 @@ function Header({ className, intl }) {
   );
 }
 
+const mapDispatchToProps = dispatch => ({
+  onLogout() {
+    dispatch(logout());
+  },
+});
+
 Header.propTypes = {
   className: PropTypes.string,
+  onLogout: PropTypes.func,
   intl: PropTypes.object,
 };
 
@@ -61,7 +77,7 @@ export default compose(
   injectIntl,
   connect(
     null,
-    null,
+    mapDispatchToProps,
   ),
   memo,
 )(Header);

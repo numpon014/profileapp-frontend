@@ -30,6 +30,9 @@ export default function App() {
         <PrivateRoute path="/profile" exact>
           <Layout component={ProfilePage} />
         </PrivateRoute>
+        <PrivateRoute path="/" exact>
+          <Layout component={ProfilePage} />
+        </PrivateRoute>
         <Route exact path="">
           <Layout component={NotFoundPage} />
         </Route>
