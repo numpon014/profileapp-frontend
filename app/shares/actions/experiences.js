@@ -90,3 +90,32 @@ export function updateExperienceCompanyLogo(
     return { type: experienceConstants.UPDATE_EXPERIENCE_FAILURE, error };
   }
 }
+
+export function createCurrentUserExperience(params, failMessage, callback) {
+  Object.assign(params, { user_id: getCurrentUserId() });
+
+  return dispatch => {
+    dispatch(request());
+
+    return experienceService
+      .createExperience(params)
+      .then(experience => {
+        dispatch(success(experience));
+        if (typeof callback === 'function') callback(experience);
+      })
+      .catch(err => {
+        dispatch(alertActions.error(failMessage));
+        dispatch(failure(err.toString()));
+      });
+  };
+
+  function request() {
+    return { type: experienceConstants.CREATE_EXPERIENCE_REQUEST };
+  }
+  function success(experience) {
+    return { type: experienceConstants.CREATE_EXPERIENCE_SUCCESS, experience };
+  }
+  function failure(error) {
+    return { type: experienceConstants.CREATE_EXPERIENCE_FAILURE, error };
+  }
+}

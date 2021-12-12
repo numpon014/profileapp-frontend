@@ -1,156 +1,123 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import PropTypes from 'prop-types';
-import EasyEdit, { Types } from 'react-easy-edit';
+import { Button, Container, Form, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-import { compose } from 'redux';
 import { injectIntl } from 'react-intl';
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { updateExperience } from 'shares/actions/experiences';
+import { compose } from 'redux';
+import FileUpload from 'components/FileUpload';
+import { createCurrentUserExperience } from 'shares/actions/experiences';
 
 const StyledWrapper = styled.div`
-  .title {
-    color: #02c0ce;
-  }
+  min-height: 100px;
 
-  p {
-    padding: 5px 0;
-    margin: 0;
-  }
-
-  .easy-edit-inline-wrapper {
-    .easy-edit-component-wrapper {
-      width: 90%;
-      input[type='text'] {
-        min-height: calc(1.5em + 0.5rem + 2px);
-        padding: 0.25rem 0.5rem;
-        border: 1px solid #ced4da;
-        border-radius: 0.2rem;
-        font-size: 0.875rem;
-        margin-bottom: 2px;
-        &:focus {
-          outline: none;
-          outline: #ced4da;
-        }
-      }
-      textarea {
-        min-height: 150px;
-        &:focus {
-          outline: none;
-          outline: #ced4da;
-        }
-      }
-    }
-
-    .easy-edit-button {
-      background: none;
-    }
-  }
-
-  .text-muted {
-    font-size: 13px;
-  }
-
-  .period {
-    &:after {
-      content: '';
-      clear: both;
-      display: table;
-    }
-
-    .easy-edit-wrapper,
-    .date-to {
-      float: left;
-      margin-right: 5px;
-    }
+  .submit-wrapper {
+    margin-top: 10px;
   }
 `;
 
-function ExperienceForm({ className, experience, onSaveExperience, intl }) {
-  const onSubmit = (name, value) => {
-    onSaveExperience(
-      experience.id,
+function ExperienceForm({ className, onSubmitForm, intl }) {
+  const [title, setTitle] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [description, setDescription] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    onSubmitForm(
       {
-        [name]: value,
+        title,
+        companyName,
+        startDate,
+        endDate,
+        description,
+        selectedFile,
       },
       intl.formatMessage({ id: 'loginPage.form.result.fail.message' }),
     );
   };
 
+  const showErrorAlert = error => {
+    console.log(error);
+  };
+
   return (
-    <StyledWrapper className={`${className}`}>
-      <div className="title">
-        <EasyEdit
-          type={Types.TEXT}
-          value={experience.title}
-          onSave={value => {
-            onSubmit('title', value);
-          }}
-          saveButtonLabel={<FontAwesomeIcon icon={faCheck} />}
-          cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
-          attributes={{ name: 'experience-title', id: 1 }}
-        />
-      </div>
-      <EasyEdit
-        type={Types.TEXT}
-        value={experience.company}
-        onSave={value => {
-          onSubmit('company', value);
-        }}
-        saveButtonLabel={<FontAwesomeIcon icon={faCheck} />}
-        cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
-        attributes={{ name: 'experience-company', id: 1 }}
-      />
-      <div className="period">
-        <EasyEdit
-          type={Types.DATE}
-          value={experience.start_date}
-          onSave={value => {
-            onSubmit('start_date', value);
-          }}
-          saveButtonLabel={<FontAwesomeIcon icon={faCheck} />}
-          cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
-          attributes={{ name: 'experience-start-date', id: 1 }}
-        />
-        <span className="date-to"> - </span>
-        <EasyEdit
-          type={Types.DATE}
-          value={experience.end_date}
-          onSave={value => {
-            onSubmit('end_date', value);
-          }}
-          saveButtonLabel={<FontAwesomeIcon icon={faCheck} />}
-          cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
-          attributes={{ name: 'experience-end-date', id: 1 }}
-        />
-      </div>
-      <div className="text-muted">
-        <EasyEdit
-          type={Types.TEXTAREA}
-          value={experience.description}
-          onSave={value => {
-            onSubmit('description', value);
-          }}
-          saveButtonLabel={<FontAwesomeIcon icon={faCheck} />}
-          cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
-          attributes={{ name: 'experience-description', id: 1 }}
-        />
-      </div>
+    <StyledWrapper className={className}>
+      <Form onSubmit={handleSubmit}>
+        <Container>
+          <h5 className="mb-2 text-primary">Create Experience</h5>
+          <Row>
+            <Form.Group>
+              <Form.Label column="sm">Title</Form.Label>
+              <Form.Control
+                type="text"
+                size="sm"
+                onChange={e => setTitle(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label column="sm">Company Name</Form.Label>
+              <Form.Control
+                type="text"
+                size="sm"
+                onChange={e => setCompanyName(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label column="sm">Company Logo</Form.Label>
+              <FileUpload
+                onFileSelectSuccess={file => setSelectedFile(file)}
+                onFileSelectError={({ error }) => showErrorAlert(error)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label column="sm">Start Date</Form.Label>
+              <Form.Control
+                type="date"
+                size="sm"
+                onChange={e => setStartDate(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label column="sm">End Date</Form.Label>
+              <Form.Control
+                type="date"
+                size="sm"
+                onChange={e => setEndDate(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label column="sm">Description</Form.Label>
+              <Form.Control
+                type="text"
+                size="sm"
+                onChange={e => setDescription(e.target.value)}
+              />
+            </Form.Group>
+          </Row>
+          <div className="submit-wrapper">
+            <Button variant="primary" type="submit" size="sm">
+              Submit
+            </Button>
+          </div>
+        </Container>
+      </Form>
     </StyledWrapper>
   );
 }
 
 ExperienceForm.propTypes = {
-  className: PropTypes.string,
-  experience: PropTypes.object,
-  onSaveExperience: PropTypes.func,
   intl: PropTypes.object,
+  className: PropTypes.string,
+  onSubmitForm: PropTypes.func,
 };
 
 const mapDispatchToProps = dispatch => ({
-  onSaveExperience(id, params, failMessage, callback) {
-    dispatch(updateExperience(id, params, failMessage, callback));
+  onSubmitForm(params, failMessage, callback) {
+    dispatch(createCurrentUserExperience(params, failMessage, callback));
   },
 });
 
