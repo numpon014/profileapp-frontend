@@ -1,5 +1,7 @@
 {
-  "app.name": "Profile App by Tukubkao Farm",
+  "app.name": "Profile App",
+  "app.navbar.logout": "Logout",
+  "app.navbar.home": "Home",
   "loginPage.page.title": "Login Page",
   "loginPage.page.content": "Register your profile to get free ads!",
   "loginPage.form.title": "Log In",
@@ -14,7 +16,6 @@
   "profilePage.form.title": "Profile",
   "profilePage.form.field.name.label": "Name",
   "profilePage.form.field.age.label": "Age",
-
   "boilerplate.components.Footer.author.message": "Made with love by {author}.",
   "boilerplate.components.Footer.license.message": "This project is licensed under the MIT license.",
   "boilerplate.components.Header.features": "Features",

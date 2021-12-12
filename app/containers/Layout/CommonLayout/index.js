@@ -10,7 +10,7 @@ const StyledWrap = styled.div`
   position: absolute;
 
   .main-body {
-    max-width: calc(1128px + 16px * 2);
+    max-width: calc(1320px + 16px * 2);
     margin: 0 auto;
     display: flex;
     min-height: 100%;
