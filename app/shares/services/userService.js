@@ -2,6 +2,7 @@ import { httpRequest } from '../../utils/httpClient';
 
 export const userService = {
   getCurrentUser,
+  createUser,
   updateUser,
   getUserExperience,
 };
@@ -20,6 +21,29 @@ function getCurrentUser() {
         reject(error);
       });
   });
+}
+
+function createUser(username, password, passwordConfirmation) {
+  const uri = `users`;
+  const bodyFormData = new FormData();
+  bodyFormData.set('username', username);
+  bodyFormData.set('password', password);
+  bodyFormData.set('password_confirmation', passwordConfirmation);
+
+  return new Promise((resolve, reject) =>
+    httpRequest
+      .default()
+      .post(uri, bodyFormData, {
+        method: 'POST',
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      }),
+  );
 }
 
 function updateUser(id, params) {

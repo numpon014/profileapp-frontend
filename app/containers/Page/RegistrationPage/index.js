@@ -10,10 +10,10 @@ import appLogo from 'assets/images/tukubkao_logo.png';
 import Alert from 'containers/Alert';
 import history from 'utils/history';
 import { alertActions } from 'containers/Alert/action';
-import { login } from 'shares/actions/auth';
+import { register } from 'shares/actions/users';
 import { Link } from 'react-router-dom';
 
-const LoginPageWrapper = styled.div`
+const RegistrationPageWrapper = styled.div`
   background: #12c2e9;
   background: -webkit-linear-gradient(
     to right,
@@ -38,7 +38,7 @@ const LoginPageWrapper = styled.div`
     margin: 0 auto 10px;
   }
 
-  .auth-inner {
+  .inner {
     background-color: #fff;
     box-shadow: 0 14px 80px rgba(34, 35, 58, 0.2);
     padding: 40px 55px 45px 55px;
@@ -50,20 +50,22 @@ const LoginPageWrapper = styled.div`
     transform: translate(-50%, -50%);
   }
 
-  .register-link {
+  .login-link {
     text-align: right;
   }
 `;
 
-export function LoginPage({ onSubmitForm, clearAlert, intl }) {
+export function RegistrationPage({ onSubmitForm, clearAlert, intl }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
 
   const handleSubmit = e => {
     e.preventDefault();
     onSubmitForm(
       username,
       password,
+      passwordConfirmation,
       intl.formatMessage({ id: 'loginPage.form.result.fail.message' }),
     );
   };
@@ -75,7 +77,7 @@ export function LoginPage({ onSubmitForm, clearAlert, intl }) {
   }, []);
 
   return (
-    <LoginPageWrapper>
+    <RegistrationPageWrapper>
       <Helmet>
         <title>{intl.formatMessage({ id: 'loginPage.page.title' })}</title>
         <meta
@@ -83,7 +85,7 @@ export function LoginPage({ onSubmitForm, clearAlert, intl }) {
           content={intl.formatMessage({ id: 'loginPage.page.content' })}
         />
       </Helmet>
-      <div className="auth-inner">
+      <div className="inner">
         <img
           src={appLogo}
           alt={intl.formatMessage({ id: 'app.name' })}
@@ -93,59 +95,71 @@ export function LoginPage({ onSubmitForm, clearAlert, intl }) {
           <Alert />
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Label>
-              <FormattedMessage id="loginPage.form.field.email.label" />
+              <FormattedMessage id="registerPage.form.field.email.label" />
             </Form.Label>
             <Form.Control
               type="email"
               placeholder={intl.formatMessage({
-                id: 'loginPage.form.field.email.placeholder',
+                id: 'registerPage.form.field.email.placeholder',
               })}
               value={username}
               onChange={e => setUsername(e.target.value)}
             />
           </Form.Group>
-
           <Form.Group className="mb-3" controlId="formBasicPassword">
             <Form.Label>
-              <FormattedMessage id="loginPage.form.field.password.label" />
+              <FormattedMessage id="registerPage.form.field.password.label" />
             </Form.Label>
             <Form.Control
               type="password"
               placeholder={intl.formatMessage({
-                id: 'loginPage.form.field.password.placeholder',
+                id: 'registerPage.form.field.password.placeholder',
               })}
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Label>
+              <FormattedMessage id="registerPage.form.field.passwordConfirmation.label" />
+            </Form.Label>
+            <Form.Control
+              type="password"
+              placeholder={intl.formatMessage({
+                id: 'registerPage.form.field.passwordConfirmation.placeholder',
+              })}
+              value={passwordConfirmation}
+              onChange={e => setPasswordConfirmation(e.target.value)}
+            />
+          </Form.Group>
           <div className="d-grid gap-2">
             <Button variant="dark" type="submit" size="lg">
-              <FormattedMessage id="loginPage.form.button.signIn" />
+              <FormattedMessage id="registerPage.form.button.register" />
             </Button>
-            <div className="register-link">
+            <div className="login-link">
               <span>
-                <FormattedMessage id="loginPage.form.button.registerInvitation" />{' '}
+                <FormattedMessage id="registerPage.form.button.loginInvitation" />{' '}
               </span>
-              <Link to="/register">
-                <FormattedMessage id="loginPage.form.button.register" />
+              <Link to="/login">
+                <FormattedMessage id="registerPage.form.button.signIn" />
               </Link>
             </div>
           </div>
         </Form>
       </div>
-    </LoginPageWrapper>
+    </RegistrationPageWrapper>
   );
 }
 
-LoginPage.propTypes = {
+RegistrationPage.propTypes = {
   intl: PropTypes.object,
   onSubmitForm: PropTypes.func,
   clearAlert: PropTypes.func,
 };
 
 const mapDispatchToProps = dispatch => ({
-  onSubmitForm(username, password, failMessage) {
-    dispatch(login(username, password, failMessage));
+  onSubmitForm(username, password, passwordConfirmation) {
+    dispatch(register(username, password, passwordConfirmation));
   },
   clearAlert() {
     dispatch(alertActions.clear());
@@ -161,4 +175,4 @@ export default compose(
   injectIntl,
   withConnect,
   memo,
-)(LoginPage);
+)(RegistrationPage);
