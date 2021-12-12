@@ -37,7 +37,10 @@ function ExperienceList({ className, experiences }) {
                 <div key={`${experience.id}`} className="experience-item">
                   <p className="title">{experience.title}</p>
                   <p className="company">{experience.company}</p>
-                  <p className="period">2010-2015</p>
+                  <p className="period">
+                    <span className="start-date">{experience.start_date}</span>
+                    <span className="start-date">{experience.end_date}</span>
+                  </p>
                   <p className="text-muted">{experience.description}</p>
                 </div>
               ))}
