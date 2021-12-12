@@ -1,6 +1,13 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button } from 'react-bootstrap';
+import styled from 'styled-components';
+
+const StyledWrapper = styled.div`
+  .hidden-input {
+    display: none;
+  }
+`;
 
 function FileUploader({ onFileSelectSuccess, onFileSelectError }) {
   const fileInput = useRef(null);
@@ -13,10 +20,15 @@ function FileUploader({ onFileSelectSuccess, onFileSelectError }) {
   };
 
   return (
-    <div className="file-uploader">
-      <Form.Control type="file" onChange={handleFileInput} />
-      <Button onClick={() => fileInput.current && fileInput.current.click()} />
-    </div>
+    <StyledWrapper>
+      <div className="file-uploader">
+        <Form.Control type="file" size="sm" onChange={handleFileInput} />
+        <Button
+          className="hidden-input"
+          onClick={() => fileInput.current && fileInput.current.click()}
+        />
+      </div>
+    </StyledWrapper>
   );
 }
 

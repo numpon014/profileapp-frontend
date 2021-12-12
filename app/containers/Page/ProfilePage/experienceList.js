@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo } from 'react';
 import PropTypes from 'prop-types';
 import { Card, Col, Row, Container, Button } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -41,12 +41,6 @@ const StyledWrapper = styled.div`
 `;
 
 function ExperienceList({ className, experiences, deleteUserExperience }) {
-  const [showExperienceForm, setShowExperienceForm] = useState(false);
-
-  const toggleExperienceForm = () => {
-    setShowExperienceForm(!showExperienceForm);
-  };
-
   const handleRowHover = rowKey => {
     const control = document.getElementById(`delete-button-${rowKey}`);
     control.style.display = 'block';
@@ -58,7 +52,7 @@ function ExperienceList({ className, experiences, deleteUserExperience }) {
   };
 
   const onDeleteExperience = experienceId => {
-    // eslint-disable-next-line no-unused-expressions
+    // eslint-disable-next-line no-unused-expressions,no-alert
     window.confirm('Are you sure you wish to delete this item?') &&
       deleteUserExperience(experienceId);
   };
@@ -103,20 +97,7 @@ function ExperienceList({ className, experiences, deleteUserExperience }) {
                   </Col>
                 </Row>
               ))}
-            <Row>
-              <Button
-                variant="outline-primary"
-                size="sm"
-                onClick={toggleExperienceForm}
-              >
-                {showExperienceForm
-                  ? 'Close Experience Form'
-                  : 'Add Experience'}
-              </Button>
-              {showExperienceForm && (
-                <ExperienceForm className="experience-form" />
-              )}
-            </Row>
+            <ExperienceForm className="experience-form" />
           </Container>
         </Card.Body>
       </Card>
