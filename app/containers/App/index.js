@@ -10,11 +10,9 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import { Switch, Route } from 'react-router-dom';
 
-import HomePage from 'containers/HomePage/Loadable';
-import FeaturePage from 'containers/FeaturePage/Loadable';
-import ProfilePage from 'containers/page/ProfilePage/loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import LoginPage from 'containers/LoginPage/loadable';
+import ProfilePage from 'containers/Page/ProfilePage/loadable';
+import NotFoundPage from 'containers/Page/NotFoundPage/Loadable';
+import LoginPage from 'containers/Page/LoginPage/loadable';
 import Layout from 'containers/Layout/CommonLayout';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -29,13 +27,10 @@ export default function App() {
       </Helmet>
       <Switch>
         <Route path="/login" component={LoginPage} />
-        <PrivateRoute path="/" exact>
-          <Layout component={HomePage} />
-        </PrivateRoute>
-        <PrivateRoute path="/features" exact>
-          <Layout component={FeaturePage} />
-        </PrivateRoute>
         <PrivateRoute path="/profile" exact>
+          <Layout component={ProfilePage} />
+        </PrivateRoute>
+        <PrivateRoute path="/" exact>
           <Layout component={ProfilePage} />
         </PrivateRoute>
         <Route exact path="">

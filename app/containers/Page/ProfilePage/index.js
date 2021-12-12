@@ -60,9 +60,7 @@ export function ProfilePage({
                 <PersonalDetailForm user={user.user} />
               </div>
             )}
-            {experience && experience.experiences && (
-              <ExperienceList experiences={experience.experiences} />
-            )}
+            <ExperienceList experiences={experience.experiences} />
           </Col>
         </Row>
       </Container>
