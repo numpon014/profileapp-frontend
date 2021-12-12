@@ -13,6 +13,7 @@ import { Switch, Route } from 'react-router-dom';
 import ProfilePage from 'containers/Page/ProfilePage/loadable';
 import NotFoundPage from 'containers/Page/NotFoundPage/Loadable';
 import LoginPage from 'containers/Page/LoginPage/loadable';
+import RegistrationPage from 'containers/Page/RegistrationPage/loadable';
 import Layout from 'containers/Layout/CommonLayout';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -27,6 +28,7 @@ export default function App() {
       </Helmet>
       <Switch>
         <Route path="/login" component={LoginPage} />
+        <Route path="/register" component={RegistrationPage} />
         <PrivateRoute path="/profile" exact>
           <Layout component={ProfilePage} />
         </PrivateRoute>
