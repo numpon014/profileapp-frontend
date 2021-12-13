@@ -34,7 +34,11 @@ function ExperienceForm({ className, onSubmitForm }) {
     companyName: Yup.string().required(),
     title: Yup.string().required(),
     startDate: Yup.date().required(),
-    endDate: Yup.date(),
+    endDate: Yup.date().when(
+      'startDate',
+      // eslint-disable-next-line no-shadow
+      (startDate, schema) => startDate && schema.min(startDate),
+    ),
   });
 
   return (
@@ -154,7 +158,7 @@ function ExperienceForm({ className, onSubmitForm }) {
                   {errors.startDate}
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group>
+              <Form.Group className="position-relative">
                 <Form.Label column="sm">
                   <FormattedMessage id="profilePage.form.experience.field.endDate.label" />
                 </Form.Label>
