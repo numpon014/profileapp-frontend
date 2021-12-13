@@ -51,7 +51,7 @@ function createExperience(params) {
   formData.append('start_date', params.startDate);
   formData.append('end_date', params.endDate);
   formData.append('description', params.description);
-  formData.append('company_logo', params.selectedFile);
+  formData.append('company_logo', params.company_logo);
 
   return new Promise((resolve, reject) =>
     httpRequest
