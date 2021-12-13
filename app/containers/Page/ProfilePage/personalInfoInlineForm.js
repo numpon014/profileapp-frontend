@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { updateUser } from 'shares/actions/users';
+import AvatarUploader from './avatarUploader';
 
 const StyledWrapper = styled.div`
   .profile {
@@ -69,7 +70,8 @@ function ProfileCard({ className, user, onSubmitForm, intl }) {
             <div className="account">
               <div className="profile">
                 <div className="avatar">
-                  <img src={user.avatar.url} alt={user.name} />
+                  {/* <img src={user.avatar.url} alt={user.name} /> */}
+                  <AvatarUploader userId={user.id} imageUrl={user.avatar.url} />
                 </div>
                 <div className="inline-editor name">
                   <EasyEdit
