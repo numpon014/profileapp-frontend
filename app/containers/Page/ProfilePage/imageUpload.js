@@ -18,11 +18,13 @@ const StyledWrapper = styled.div`
 
   label {
     width: 100%;
+    text-align: center;
   }
 
   .company-logo-placeholder {
     text-align: center;
     cursor: pointer;
+    padding: 10px 0;
     span {
       display: block;
       font-size: 12px;
@@ -95,8 +97,14 @@ function ImageUpload({ experienceId, imageUrl, onSaveLogo, intl }) {
           {image.preview ? (
             <Image
               src={image.preview}
-              alt="company logo: click to change logo"
-              title="click to change logo"
+              alt={intl.formatMessage({
+                id:
+                  'profilePage.form.experience.field.companyLogo.change.label',
+              })}
+              title={intl.formatMessage({
+                id:
+                  'profilePage.form.experience.field.companyLogo.change.label',
+              })}
               width="90"
               height="90"
               rounded
@@ -104,9 +112,12 @@ function ImageUpload({ experienceId, imageUrl, onSaveLogo, intl }) {
           ) : (
             <div
               className="company-logo-placeholder"
-              title="Click to upload company logo"
+              title={intl.formatMessage({
+                id:
+                  'profilePage.form.experience.field.companyLogo.upload.label',
+              })}
             >
-              <FontAwesomeIcon icon={faBuilding} />
+              <FontAwesomeIcon icon={faBuilding} className="fa-2x" />
               <span>Company logo</span>
             </div>
           )}

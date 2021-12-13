@@ -84,14 +84,9 @@ function AvatarUploader({ userId, imageUrl, upload, intl }) {
   const handleUpload = async e => {
     e.preventDefault();
 
-    upload(
-      userId,
-      image.raw,
-      intl.formatMessage({ id: 'loginPage.form.result.fail.message' }),
-      () => {
-        setShowUploadButton(false);
-      },
-    );
+    upload(userId, image.raw, () => {
+      setShowUploadButton(false);
+    });
   };
 
   return (
@@ -101,8 +96,12 @@ function AvatarUploader({ userId, imageUrl, upload, intl }) {
           {image.preview ? (
             <Image
               src={image.preview}
-              alt="company logo: click to change logo"
-              title="click to change logo"
+              alt={intl.formatMessage({
+                id: 'profilePage.form.field.avatar.change.label',
+              })}
+              title={intl.formatMessage({
+                id: 'profilePage.form.field.avatar.change.label',
+              })}
               width="90"
               height="90"
               roundedCircle
@@ -110,7 +109,9 @@ function AvatarUploader({ userId, imageUrl, upload, intl }) {
           ) : (
             <div
               className="avatar-placeholder"
-              title="Click to upload your avatar"
+              title={intl.formatMessage({
+                id: 'profilePage.form.field.avatar.upload.label',
+              })}
             >
               <FontAwesomeIcon icon={faUserAstronaut} className="fa-2x" />
               <span>Avatar</span>
@@ -154,8 +155,8 @@ AvatarUploader.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  upload(id, rawImage, failMessage, callback) {
-    dispatch(updateUserAvatar(id, rawImage, failMessage, callback));
+  upload(id, rawImage, callback) {
+    dispatch(updateUserAvatar(id, rawImage, callback));
   },
 });
 

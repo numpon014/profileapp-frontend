@@ -87,7 +87,7 @@ export function register(username, password, passwordConfirmation) {
   };
 }
 
-export function updateUserAvatar(id, rawImage, failMessage, callback) {
+export function updateUserAvatar(id, rawImage, callback) {
   return dispatch => {
     dispatch(request());
 
@@ -98,7 +98,7 @@ export function updateUserAvatar(id, rawImage, failMessage, callback) {
         if (typeof callback === 'function') callback(user);
       })
       .catch(err => {
-        dispatch(alertActions.error(failMessage));
+        dispatch(alertActions.error(err.toString()));
         dispatch(failure(err.toString()));
       });
   };
