@@ -40,5 +40,6 @@
   "profilePage.form.experience.field.endDate.label": "End Date",
   "profilePage.form.experience.field.description.label": "Description",
   "profilePage.form.experience.button.save": "Save",
+  "profilePage.form.experience.button.cancel": "Cancel",
   "notFoundPage.page.title": "Page not found."
 }

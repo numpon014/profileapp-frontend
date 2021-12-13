@@ -76,21 +76,12 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
           </h5>
           <Form.Group>
             <Form.Label column="sm">
-              <FormattedMessage id="profilePage.form.experience.field.title.label" />
-            </Form.Label>
-            <Form.Control
-              type="text"
-              size="sm"
-              onChange={e => setTitle(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group>
-            <Form.Label column="sm">
               <FormattedMessage id="profilePage.form.experience.field.companyName.label" />
             </Form.Label>
             <Form.Control
               type="text"
               size="sm"
+              required
               onChange={e => setCompanyName(e.target.value)}
             />
           </Form.Group>
@@ -105,11 +96,23 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
           </Form.Group>
           <Form.Group>
             <Form.Label column="sm">
+              <FormattedMessage id="profilePage.form.experience.field.title.label" />
+            </Form.Label>
+            <Form.Control
+              type="text"
+              size="sm"
+              required
+              onChange={e => setTitle(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group>
+            <Form.Label column="sm">
               <FormattedMessage id="profilePage.form.experience.field.startDate.label" />
             </Form.Label>
             <Form.Control
               type="date"
               size="sm"
+              required
               onChange={e => setStartDate(e.target.value)}
             />
           </Form.Group>
@@ -130,12 +133,22 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
             <Form.Control
               type="text"
               size="sm"
+              as="textarea"
+              rows={3}
               onChange={e => setDescription(e.target.value)}
             />
           </Form.Group>
           <div className="submit-wrapper">
             <Button variant="primary" type="submit" size="sm">
               <FormattedMessage id="profilePage.form.experience.button.save" />
+            </Button>{' '}
+            <Button
+              variant="secondary"
+              type="reset"
+              size="sm"
+              onClick={toggleExperienceForm}
+            >
+              <FormattedMessage id="profilePage.form.experience.button.cancel" />
             </Button>
           </div>
         </Form>
