@@ -30,28 +30,35 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
   const [description, setDescription] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
   const [showExperienceForm, setShowExperienceForm] = useState(false);
+  const [validated, setValidated] = useState(false);
 
   const toggleExperienceForm = () => {
     setShowExperienceForm(!showExperienceForm);
+    setValidated(false);
   };
 
   const handleSubmit = e => {
     e.preventDefault();
 
-    onSubmitForm(
-      {
-        title,
-        companyName,
-        startDate,
-        endDate,
-        description,
-        selectedFile,
-      },
-      intl.formatMessage({ id: 'loginPage.form.result.fail.message' }),
-      () => {
-        setShowExperienceForm(false);
-      },
-    );
+    const form = e.currentTarget;
+    if (form.checkValidity() === true) {
+      onSubmitForm(
+        {
+          title,
+          companyName,
+          startDate,
+          endDate,
+          description,
+          selectedFile,
+        },
+        intl.formatMessage({ id: 'loginPage.form.result.fail.message' }),
+        () => {
+          setShowExperienceForm(false);
+          setValidated(false);
+        },
+      );
+    }
+    setValidated(true);
   };
 
   const showErrorAlert = error => {
@@ -70,20 +77,15 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
         <span>{showExperienceForm ? 'Close' : 'Add Experience'}</span>
       </Button>
       {showExperienceForm && (
-        <Form onSubmit={handleSubmit} className="experience-form">
+        <Form
+          noValidate
+          validated={validated}
+          onSubmit={handleSubmit}
+          className="experience-form"
+        >
           <h5 className="mb-2 text-primary">
             <FormattedMessage id="profilePage.form.experience.title" />
           </h5>
-          <Form.Group>
-            <Form.Label column="sm">
-              <FormattedMessage id="profilePage.form.experience.field.title.label" />
-            </Form.Label>
-            <Form.Control
-              type="text"
-              size="sm"
-              onChange={e => setTitle(e.target.value)}
-            />
-          </Form.Group>
           <Form.Group>
             <Form.Label column="sm">
               <FormattedMessage id="profilePage.form.experience.field.companyName.label" />
@@ -91,8 +93,12 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
             <Form.Control
               type="text"
               size="sm"
+              required
               onChange={e => setCompanyName(e.target.value)}
             />
+            <Form.Control.Feedback type="invalid">
+              <FormattedMessage id="profilePage.form.experience.field.companyName.validate" />
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group>
             <Form.Label column="sm">
@@ -105,13 +111,31 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
           </Form.Group>
           <Form.Group>
             <Form.Label column="sm">
+              <FormattedMessage id="profilePage.form.experience.field.title.label" />
+            </Form.Label>
+            <Form.Control
+              type="text"
+              size="sm"
+              required
+              onChange={e => setTitle(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              <FormattedMessage id="profilePage.form.experience.field.title.validate" />
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label column="sm">
               <FormattedMessage id="profilePage.form.experience.field.startDate.label" />
             </Form.Label>
             <Form.Control
               type="date"
               size="sm"
+              required
               onChange={e => setStartDate(e.target.value)}
             />
+            <Form.Control.Feedback type="invalid">
+              <FormattedMessage id="profilePage.form.experience.field.startDate.validate" />
+            </Form.Control.Feedback>
           </Form.Group>
           <Form.Group>
             <Form.Label column="sm">
@@ -130,12 +154,22 @@ function ExperienceForm({ className, onSubmitForm, intl }) {
             <Form.Control
               type="text"
               size="sm"
+              as="textarea"
+              rows={3}
               onChange={e => setDescription(e.target.value)}
             />
           </Form.Group>
           <div className="submit-wrapper">
             <Button variant="primary" type="submit" size="sm">
               <FormattedMessage id="profilePage.form.experience.button.save" />
+            </Button>{' '}
+            <Button
+              variant="secondary"
+              type="reset"
+              size="sm"
+              onClick={toggleExperienceForm}
+            >
+              <FormattedMessage id="profilePage.form.experience.button.cancel" />
             </Button>
           </div>
         </Form>
