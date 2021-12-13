@@ -91,7 +91,7 @@ export function updateExperienceCompanyLogo(
   }
 }
 
-export function createCurrentUserExperience(params, failMessage, callback) {
+export function createCurrentUserExperience(params, callback) {
   Object.assign(params, { user_id: getCurrentUserId() });
 
   return dispatch => {
@@ -104,7 +104,7 @@ export function createCurrentUserExperience(params, failMessage, callback) {
         if (typeof callback === 'function') callback(experience);
       })
       .catch(err => {
-        dispatch(alertActions.error(failMessage));
+        dispatch(alertActions.error(err.toString()));
         dispatch(failure(err.toString()));
       });
   };
