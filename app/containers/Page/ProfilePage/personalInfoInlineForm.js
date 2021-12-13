@@ -70,7 +70,6 @@ function ProfileCard({ className, user, onSubmitForm, intl }) {
             <div className="account">
               <div className="profile">
                 <div className="avatar">
-                  {/* <img src={user.avatar.url} alt={user.name} /> */}
                   <AvatarUploader userId={user.id} imageUrl={user.avatar.url} />
                 </div>
                 <div className="inline-editor name">
@@ -82,7 +81,7 @@ function ProfileCard({ className, user, onSubmitForm, intl }) {
                     }}
                     saveButtonLabel={<FontAwesomeIcon icon={faCheck} />}
                     cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
-                    attributes={{ name: 'name', id: 4 }}
+                    attributes={{ name: 'name', id: 1 }}
                   />
                 </div>
                 <h6 className="email">{user.username}</h6>
@@ -98,7 +97,7 @@ function ProfileCard({ className, user, onSubmitForm, intl }) {
                     }}
                     saveButtonLabel={<FontAwesomeIcon icon={faCheck} />}
                     cancelButtonLabel={<FontAwesomeIcon icon={faTimes} />}
-                    attributes={{ name: 'age', id: 4 }}
+                    attributes={{ name: 'age', id: 2 }}
                   />
                 </div>
               </div>
