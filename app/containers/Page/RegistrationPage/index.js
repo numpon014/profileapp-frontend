@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
@@ -12,6 +12,8 @@ import history from 'utils/history';
 import { alertActions } from 'containers/Alert/action';
 import { register } from 'shares/actions/users';
 import { Link } from 'react-router-dom';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 const RegistrationPageWrapper = styled.div`
   background: #12c2e9;
@@ -56,33 +58,53 @@ const RegistrationPageWrapper = styled.div`
 `;
 
 export function RegistrationPage({ onSubmitForm, clearAlert, intl }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordConfirmation, setPasswordConfirmation] = useState('');
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    onSubmitForm(
-      username,
-      password,
-      passwordConfirmation,
-      intl.formatMessage({ id: 'loginPage.form.result.fail.message' }),
-    );
-  };
-
   useEffect(() => {
     history.listen(() => {
       clearAlert();
     });
   }, []);
 
+  const schema = Yup.object().shape({
+    username: Yup.string()
+      .required(
+        intl.formatMessage({
+          id: 'registerPage.form.field.email.validate.required',
+        }),
+      )
+      .email(
+        intl.formatMessage({
+          id: 'registerPage.form.field.email.validate.email',
+        }),
+      ),
+    password: Yup.string()
+      .required(
+        intl.formatMessage({
+          id: 'registerPage.form.field.password.validate.required',
+        }),
+      )
+      .min(6)
+      .max(40),
+    passwordConfirmation: Yup.string()
+      .required(
+        intl.formatMessage({
+          id: 'registerPage.form.field.passwordConfirmation.validate.required',
+        }),
+      )
+      .oneOf(
+        [Yup.ref('password'), null],
+        intl.formatMessage({
+          id: 'registerPage.form.field.passwordConfirmation.validate.mismatch',
+        }),
+      ),
+  });
+
   return (
     <RegistrationPageWrapper>
       <Helmet>
-        <title>{intl.formatMessage({ id: 'loginPage.page.title' })}</title>
+        <title>{intl.formatMessage({ id: 'registerPage.page.title' })}</title>
         <meta
           name={intl.formatMessage({ id: 'app.name' })}
-          content={intl.formatMessage({ id: 'loginPage.page.content' })}
+          content={intl.formatMessage({ id: 'registerPage.page.content' })}
         />
       </Helmet>
       <div className="inner">
@@ -91,61 +113,106 @@ export function RegistrationPage({ onSubmitForm, clearAlert, intl }) {
           alt={intl.formatMessage({ id: 'app.name' })}
           className="logo"
         />
-        <Form onSubmit={handleSubmit}>
-          <Alert />
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>
-              <FormattedMessage id="registerPage.form.field.email.label" />
-            </Form.Label>
-            <Form.Control
-              type="email"
-              placeholder={intl.formatMessage({
-                id: 'registerPage.form.field.email.placeholder',
-              })}
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>
-              <FormattedMessage id="registerPage.form.field.password.label" />
-            </Form.Label>
-            <Form.Control
-              type="password"
-              placeholder={intl.formatMessage({
-                id: 'registerPage.form.field.password.placeholder',
-              })}
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="formBasicPassword">
-            <Form.Label>
-              <FormattedMessage id="registerPage.form.field.passwordConfirmation.label" />
-            </Form.Label>
-            <Form.Control
-              type="password"
-              placeholder={intl.formatMessage({
-                id: 'registerPage.form.field.passwordConfirmation.placeholder',
-              })}
-              value={passwordConfirmation}
-              onChange={e => setPasswordConfirmation(e.target.value)}
-            />
-          </Form.Group>
-          <div className="d-grid gap-2">
-            <Button variant="dark" type="submit" size="lg">
-              <FormattedMessage id="registerPage.form.button.register" />
-            </Button>
-            <div className="login-link">
-              <span>
-                <FormattedMessage id="registerPage.form.button.loginInvitation" />{' '}
-              </span>
-              <Link to="/login">
-                <FormattedMessage id="registerPage.form.button.signIn" />
-              </Link>
-            </div>
-          </div>
-        </Form>
+        <Formik
+          initialValues={{
+            username: '',
+            password: '',
+            passwordConfirmation: '',
+          }}
+          validationSchema={schema}
+          onSubmit={(values, { setSubmitting }) => {
+            setSubmitting(true);
+
+            onSubmitForm(
+              values.username,
+              values.password,
+              values.passwordConfirmation,
+              () => {
+                setSubmitting(false);
+                history.push('/profile');
+              },
+            );
+          }}
+        >
+          {({ handleSubmit, handleChange, values, errors, isSubmitting }) => (
+            <Form noValidate onSubmit={handleSubmit}>
+              <Alert />
+              <Form.Group className="mb-3 position-relative">
+                <Form.Label>
+                  <FormattedMessage id="registerPage.form.field.email.label" />
+                </Form.Label>
+                <Form.Control
+                  type="email"
+                  name="username"
+                  placeholder={intl.formatMessage({
+                    id: 'registerPage.form.field.email.placeholder',
+                  })}
+                  value={values.username}
+                  onChange={handleChange}
+                  isInvalid={!!errors.username}
+                />
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.username}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group className="mb-3 position-relative">
+                <Form.Label>
+                  <FormattedMessage id="registerPage.form.field.password.label" />
+                </Form.Label>
+                <Form.Control
+                  type="password"
+                  name="password"
+                  placeholder={intl.formatMessage({
+                    id: 'registerPage.form.field.password.placeholder',
+                  })}
+                  value={values.password}
+                  onChange={handleChange}
+                  isInvalid={!!errors.password}
+                />
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.password}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group className="mb-3 position-relative">
+                <Form.Label>
+                  <FormattedMessage id="registerPage.form.field.passwordConfirmation.label" />
+                </Form.Label>
+                <Form.Control
+                  name="passwordConfirmation"
+                  type="password"
+                  placeholder={intl.formatMessage({
+                    id:
+                      'registerPage.form.field.passwordConfirmation.placeholder',
+                  })}
+                  value={values.passwordConfirmation}
+                  onChange={handleChange}
+                  isInvalid={!!errors.passwordConfirmation}
+                />
+                <Form.Control.Feedback type="invalid" tooltip>
+                  {errors.passwordConfirmation}
+                </Form.Control.Feedback>
+              </Form.Group>
+              <div className="d-grid gap-2">
+                <Button
+                  variant="dark"
+                  type="submit"
+                  size="lg"
+                  disabled={isSubmitting}
+                >
+                  <FormattedMessage id="registerPage.form.button.register" />
+                </Button>
+                <div className="login-link">
+                  <span>
+                    <FormattedMessage id="registerPage.form.button.loginInvitation" />{' '}
+                  </span>
+                  <Link to="/login">
+                    <FormattedMessage id="registerPage.form.button.signIn" />
+                  </Link>
+                </div>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </div>
     </RegistrationPageWrapper>
   );
@@ -158,8 +225,8 @@ RegistrationPage.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  onSubmitForm(username, password, passwordConfirmation) {
-    dispatch(register(username, password, passwordConfirmation));
+  onSubmitForm(username, password, passwordConfirmation, callback) {
+    dispatch(register(username, password, passwordConfirmation, callback));
   },
   clearAlert() {
     dispatch(alertActions.clear());

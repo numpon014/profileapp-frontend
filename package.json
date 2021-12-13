@@ -76,6 +76,7 @@
     "cross-env": "5.2.0",
     "express": "4.16.4",
     "fontfaceobserver": "2.1.0",
+    "formik": "^2.2.9",
     "history": "4.9.0",
     "hoist-non-react-statics": "3.3.0",
     "immer": "3.0.0",
@@ -98,7 +99,8 @@
     "redux-thunk": "^2.4.1",
     "reselect": "4.0.0",
     "sanitize.css": "8.0.0",
-    "styled-components": "4.2.0"
+    "styled-components": "4.2.0",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/cli": "7.4.3",

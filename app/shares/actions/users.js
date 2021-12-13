@@ -2,7 +2,6 @@ import { userService } from 'shares/services';
 import { alertActions } from 'containers/Alert/action';
 import { userConstants } from 'shares/constants/users';
 import { setItem as setStorageItem } from '../../utils/localStorage';
-import history from '../../utils/history';
 import { experienceConstants } from '../constants/experiences';
 
 export function getCurrentUser(failMessage, callback) {
@@ -59,7 +58,7 @@ export function updateUser(id, params, failMessage, callback) {
   }
 }
 
-export function register(username, password, passwordConfirmation) {
+export function register(username, password, passwordConfirmation, callback) {
   return dispatch => {
     dispatch(request({ username }));
 
@@ -68,11 +67,12 @@ export function register(username, password, passwordConfirmation) {
       .then(user => {
         setStorageItem('user', JSON.stringify(user));
         dispatch(success(user));
-        history.push('/profile');
+        if (typeof callback === 'function') callback(user);
       })
       .catch(err => {
         dispatch(alertActions.error(err.toString()));
         dispatch(failure(err.toString()));
+        if (typeof callback === 'function') callback({ error: err });
       });
 
     function request(user) {
