@@ -4,29 +4,33 @@ import styled from 'styled-components';
 import { Button, Image } from 'react-bootstrap';
 import {
   faCheck,
-  faBuilding,
+  faUserAstronaut,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { updateExperienceCompanyLogo } from 'shares/actions/experiences';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { injectIntl } from 'react-intl';
+import { updateUserAvatar } from '../../../shares/actions/users';
 
 const StyledWrapper = styled.div`
   padding-top: 5px;
 
   label {
     width: 100%;
-    text-align: center;
   }
 
-  .company-logo-placeholder {
-    text-align: center;
+  .avatar-placeholder {
+    margin: 0 auto;
+    padding: 20px 0;
     cursor: pointer;
-    padding: 10px 0;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 1px solid #9fa8b9;
     span {
       display: block;
+      text-align: center;
       font-size: 12px;
     }
   }
@@ -48,7 +52,7 @@ const StyledWrapper = styled.div`
   }
 `;
 
-function ImageUpload({ experienceId, imageUrl, onSaveLogo, intl }) {
+function AvatarUploader({ userId, imageUrl, upload, intl }) {
   const [image, setImage] = useState({ preview: '', raw: '' });
   const [showUploadButton, setShowUploadButton] = useState(false);
 
@@ -80,51 +84,43 @@ function ImageUpload({ experienceId, imageUrl, onSaveLogo, intl }) {
   const handleUpload = async e => {
     e.preventDefault();
 
-    onSaveLogo(
-      experienceId,
-      image.raw,
-      intl.formatMessage({ id: 'loginPage.form.result.fail.message' }),
-      () => {
-        setShowUploadButton(false);
-      },
-    );
+    upload(userId, image.raw, () => {
+      setShowUploadButton(false);
+    });
   };
 
   return (
     <StyledWrapper className="image-uploader">
       <form>
-        <label htmlFor={`upload-button-${experienceId}`}>
+        <label htmlFor={`upload-button-${userId}`}>
           {image.preview ? (
             <Image
               src={image.preview}
               alt={intl.formatMessage({
-                id:
-                  'profilePage.form.experience.field.companyLogo.change.label',
+                id: 'profilePage.form.field.avatar.change.label',
               })}
               title={intl.formatMessage({
-                id:
-                  'profilePage.form.experience.field.companyLogo.change.label',
+                id: 'profilePage.form.field.avatar.change.label',
               })}
               width="90"
               height="90"
-              rounded
+              roundedCircle
             />
           ) : (
             <div
-              className="company-logo-placeholder"
+              className="avatar-placeholder"
               title={intl.formatMessage({
-                id:
-                  'profilePage.form.experience.field.companyLogo.upload.label',
+                id: 'profilePage.form.field.avatar.upload.label',
               })}
             >
-              <FontAwesomeIcon icon={faBuilding} className="fa-2x" />
-              <span>Company logo</span>
+              <FontAwesomeIcon icon={faUserAstronaut} className="fa-2x" />
+              <span>Avatar</span>
             </div>
           )}
         </label>
         <input
           type="file"
-          id={`upload-button-${experienceId}`}
+          id={`upload-button-${userId}`}
           style={{ display: 'none' }}
           onChange={handleChange}
         />
@@ -151,16 +147,16 @@ function ImageUpload({ experienceId, imageUrl, onSaveLogo, intl }) {
   );
 }
 
-ImageUpload.propTypes = {
-  experienceId: PropTypes.number,
+AvatarUploader.propTypes = {
+  userId: PropTypes.number,
   imageUrl: PropTypes.string,
-  onSaveLogo: PropTypes.func,
+  upload: PropTypes.func,
   intl: PropTypes.object,
 };
 
 const mapDispatchToProps = dispatch => ({
-  onSaveLogo(id, rawImage, failMessage, callback) {
-    dispatch(updateExperienceCompanyLogo(id, rawImage, failMessage, callback));
+  upload(id, rawImage, callback) {
+    dispatch(updateUserAvatar(id, rawImage, callback));
   },
 });
 
@@ -173,4 +169,4 @@ export default compose(
   injectIntl,
   withConnect,
   memo,
-)(ImageUpload);
+)(AvatarUploader);

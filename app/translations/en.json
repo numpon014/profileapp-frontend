@@ -27,14 +27,18 @@
   "profilePage.page.content": "Your profile to get free ads!",
   "profilePage.form.title": "Profile",
   "profilePage.form.field.name.label": "Name",
+  "profilePage.form.field.avatar.upload.label": "Click to upload avatar",
+  "profilePage.form.field.avatar.change.label": "Click to change avatar",
   "profilePage.form.field.age.label": "Age",
   "profilePage.form.experience.title": "Add Experience",
   "profilePage.form.experience.field.title.label": "Title",
   "profilePage.form.experience.field.companyName.label": "Company Name",
   "profilePage.form.experience.field.companyLogo.label": "Company Logo",
+  "profilePage.form.experience.field.companyLogo.upload.label": "Click to upload company logo",
+  "profilePage.form.experience.field.companyLogo.change.label": "Click to change company logo",
   "profilePage.form.experience.field.startDate.label": "Start Date",
   "profilePage.form.experience.field.endDate.label": "End Date",
   "profilePage.form.experience.field.description.label": "Description",
   "profilePage.form.experience.button.save": "Save",
-  "boilerplate.containers.NotFoundPage.header": "Page not found."
+  "notFoundPage.page.title": "Page not found."
 }

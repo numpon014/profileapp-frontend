@@ -4,6 +4,7 @@ export const userService = {
   getCurrentUser,
   createUser,
   updateUser,
+  updateUserAvatar,
   getUserExperience,
 };
 
@@ -52,6 +53,26 @@ function updateUser(id, params) {
     httpRequest
       .default()
       .patch(uri, params)
+      .then(response => {
+        resolve(response.data);
+      })
+      .catch(error => {
+        reject(error);
+      }),
+  );
+}
+
+function updateUserAvatar(id, rawImage) {
+  const uri = `users/${id}`;
+  const formData = new FormData();
+  formData.set('avatar', rawImage);
+
+  return new Promise((resolve, reject) =>
+    httpRequest
+      .default()
+      .patch(uri, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
       .then(response => {
         resolve(response.data);
       })

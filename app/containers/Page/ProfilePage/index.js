@@ -9,8 +9,7 @@ import { injectIntl } from 'react-intl';
 import { alertActions } from 'containers/Alert/action';
 import { getCurrentUser } from 'shares/actions/users';
 import { getCurrentUserExperience } from 'shares/actions/experiences';
-import ProfileCard from 'components/ProfileCard';
-import PersonalDetailForm from './personalDetailForm';
+import ProfileCard from 'containers/Page/ProfilePage/personalInfoInlineForm';
 import ExperienceList from './experienceList';
 
 const ProfilePageWrapper = styled.div`
@@ -55,11 +54,6 @@ export function ProfilePage({
             <ProfileCard user={user.user} />
           </Col>
           <Col xs={9}>
-            {user && user.user && (
-              <div className="personal-detail">
-                <PersonalDetailForm user={user.user} />
-              </div>
-            )}
             <ExperienceList experiences={experience.experiences} />
           </Col>
         </Row>
